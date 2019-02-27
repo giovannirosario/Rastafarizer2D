@@ -1,15 +1,21 @@
 #include "Canvas.h"
 
 Canvas::Canvas(unsigned int width, unsigned int height) {
-
+    this->width = width;
+    this->height = height;
+    
+    this->canvas = new Color[width * height];
 }
+
 Canvas::~Canvas() {}
 
 void Canvas::set_width(unsigned int width) {
     this->width = width;
+    this->canvas = new Color[width * height];
 }
 void Canvas::set_height(unsigned int height) {
     this->height = height;
+    this->canvas = new Color[width * height];
 }
 
 unsigned int Canvas::get_width() {

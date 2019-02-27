@@ -13,3 +13,15 @@ void Color::set(unsigned char red, unsigned char green, unsigned char blue) {
 }
 
 Color::~Color() {}
+
+unsigned char Color::get_r() {
+    return this->rgb[0];
+}
+
+unsigned char Color::get_g(){
+    return this->rgb[1];
+}
+
+unsigned char Color::get_b(){
+    return this->rgb[2];
+};
