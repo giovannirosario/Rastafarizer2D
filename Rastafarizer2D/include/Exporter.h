@@ -3,14 +3,14 @@
 
 #include <fstream>
 #include <iostream>
-
+#include "Canvas.h"
 
 class Exporter {
     public:
         Exporter();
         ~Exporter();
-        void export_png(Canvas * canvas, std::string f_name);
-        void export_ppm(Canvas * canvas, std::string f_name);
+        void export_png(Canvas canvas, std::string f_name);
+        void export_ppm(Canvas canvas, std::string f_name);
 };
 
 #endif

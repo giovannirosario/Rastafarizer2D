@@ -1,4 +1,5 @@
 #include "Canvas.h"
+#include "Color.h"
 
 Canvas::Canvas(unsigned int width, unsigned int height) {
     this->width = width;
@@ -31,11 +32,39 @@ Color * Canvas::get_canvas() {
 }
 
 void Canvas::draw_background(Color bg_color) {
-    for(int i = 0; i < get_height() * get_width() ; i++)
+    for(unsigned int i = 0; i < get_height() * get_width() ; i++)
     {
         this->canvas[i] = bg_color;
     }
 }
 void Canvas::draw_line(Point2D start, Point2D end, Color color) {
+    unsigned int x_1 = start.get_x();
+    unsigned int y_1 = start.get_y();
+    unsigned int x_2 = end.get_x();
+    unsigned int y_2 = end.get_y();
 
-}
+
+    float delta_x = x_2 - x_1;
+    float delta_y = y_2 - y_1;
+    float p_k = 2 * delta_x * delta_y;
+
+    unsigned int x = x_1;
+    unsigned int y = y_1;
+
+    //this->canvas[(x + y * get_width()) * sizeof(Color)] = color;
+
+    this->canvas[3] = Color(100,100,100);
+
+    for(x = x + 1; x < x_2; x++) {
+        if (p_k < 0) {
+            p_k += 2 * delta_y;
+        }
+            
+        else {
+            y++;
+            p_k = p_k + 2 * delta_y - 2 * delta_x;
+        }
+
+        this->canvas[x + (y * get_width())] = color;
+    }
+ }

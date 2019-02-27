@@ -1,6 +1,9 @@
 #ifndef _CANVAS_H_
 #define _CANVAS_H_
 
+#include "Color.h"
+#include "Point2D.h"
+
 class Canvas {
     private:
         Color * canvas;
@@ -18,5 +21,6 @@ class Canvas {
         Color * get_canvas();
         void draw_background(Color bg_color);
         void draw_line(Point2D start, Point2D end, Color color);
-}
+};
 
+#endif

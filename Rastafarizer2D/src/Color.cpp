@@ -1,5 +1,7 @@
 #include "Color.h"
 
+Color::Color() {}
+
 Color::Color(unsigned char red, unsigned char green, unsigned char blue) {
     this->rgb[0] = red;
     this->rgb[1] = green;

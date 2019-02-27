@@ -11,9 +11,9 @@ class Point2D {
 		Point2D(unsigned int x, unsigned int y);
 		void set(unsigned int x, unsigned int y);
 		~Point2D();
-		int get_x();
-		int get_y();
-		bool operator==(const Vector2f &vector2f);	
+		unsigned int get_x();
+		unsigned int get_y();
+		bool operator==(const Point2D &Point2D);	
 };
 
 #endif
