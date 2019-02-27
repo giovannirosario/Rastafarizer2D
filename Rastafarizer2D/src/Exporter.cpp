@@ -14,12 +14,12 @@ void Exporter::export_ppm(Canvas canvas, std::string f_name) {
     file << "255 \n";
 
     Color * pixels = canvas.get_canvas();
-
-    for(unsigned int i = 0; i < canvas.get_width(); i++) {
-        for(unsigned int j = 0; j < canvas.get_height();j++) {
-            file << (int) pixels[i + j * canvas.get_width()].get_r() << " ";
-            file << (int) pixels[i + j * canvas.get_width()].get_g() << " ";
-            file << (int) pixels[i + j * canvas.get_width()].get_b() << " ";
+    
+    for(unsigned int i = 0; i < canvas.get_height(); i++) {
+        for(unsigned int j = 0; j < canvas.get_width();j++) {
+            file << (int) pixels[i * canvas.get_width() + j].get_r() << " ";
+            file << (int) pixels[i * canvas.get_width() + j].get_g() << " ";
+            file << (int) pixels[i * canvas.get_width() + j].get_b() << " ";
         }
         file << std::endl;
     }

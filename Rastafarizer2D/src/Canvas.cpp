@@ -46,14 +46,12 @@ void Canvas::draw_line(Point2D start, Point2D end, Color color) {
 
     float delta_x = x_2 - x_1;
     float delta_y = y_2 - y_1;
-    float p_k = 2 * delta_x * delta_y;
+    float p_k = 2 * (delta_y - delta_x);
 
     unsigned int x = x_1;
     unsigned int y = y_1;
 
-    //this->canvas[(x + y * get_width()) * sizeof(Color)] = color;
-
-    this->canvas[3] = Color(100,100,100);
+    this->canvas[y * get_width() + x] = color;
 
     for(x = x + 1; x < x_2; x++) {
         if (p_k < 0) {
@@ -62,9 +60,9 @@ void Canvas::draw_line(Point2D start, Point2D end, Color color) {
             
         else {
             y++;
-            p_k = p_k + 2 * delta_y - 2 * delta_x;
+            p_k += 2 * delta_y - 2 * delta_x;
         }
 
-        this->canvas[x + (y * get_width())] = color;
+        this->canvas[y * get_width() + x] = color;
     }
  }

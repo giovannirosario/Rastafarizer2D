@@ -5,8 +5,8 @@
 #include "Point2D.h"
 
 int main () {
-    Point2D start = Point2D(10, 20);
-    Point2D end = Point2D(300, 70);
+    Point2D start = Point2D(50, 50);
+    Point2D end = Point2D(300, 120);
 
     Canvas image = Canvas(800, 600);
     Color imperial_red = Color(237, 41, 57);
