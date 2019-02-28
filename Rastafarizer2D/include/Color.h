@@ -13,7 +13,7 @@ class Color {
         unsigned char get_r();
         unsigned char get_g();
         unsigned char get_b();
-    
+        Color operator=(const Color &color);
 };  
 
 #endif

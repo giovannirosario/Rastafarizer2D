@@ -27,3 +27,11 @@ unsigned char Color::get_g(){
 unsigned char Color::get_b(){
     return this->rgb[2];
 };
+
+Color Color::operator=(const Color &color) {
+	rgb[0] = color.rgb[0];
+    rgb[1] = color.rgb[1];
+    rgb[2] = color.rgb[2];
+    
+    return *this;
+}
