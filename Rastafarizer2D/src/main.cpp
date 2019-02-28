@@ -12,7 +12,7 @@ int main () {
     Color imperial_red = Color(237, 41, 57);
 
     //image.draw_background(imperial_red);
-    image.draw_line(start, end, imperial_red);
+    //image.draw(start, end, imperial_red);
 
     Exporter exporter = Exporter();
 

@@ -1,15 +1,17 @@
 #ifndef _OBJECT_H_
 #define _OBJECT_H_
-
-template <class T>
+#include "Color.h"
+#include "Canvas.h"
 
 class Object {
-    private:
-        T object;
+    private: 
+        Color color;
     public:
         Object();
         ~Object();
-        void draw(Canvas canvas);
-};
+        virtual void draw(Canvas canvas) {};
+        Color get_color();
+        void set_color(Color color);
+}; 
 
 #endif

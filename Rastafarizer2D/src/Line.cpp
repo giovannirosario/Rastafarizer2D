@@ -1,7 +1,15 @@
 #include "Line.h"
 #include "Canvas.h"
+#include "Point2D.h"
+#include "Object.h"
 
 Line::Line() {}
+
+Line::Line(Point2D start, Point2D end, Color color) {
+    this->start = start;
+    this->end = end;
+    set_color(color);
+}
 
 Line::~Line() {}
 
@@ -17,6 +25,8 @@ void Line::draw(Canvas canvas) {
 
     unsigned int x = x1;
     unsigned int y = y1;
+    
+    Color color = get_color();
 
     canvas.draw_pixel(x,y,color);
 
