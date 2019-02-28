@@ -1,0 +1,16 @@
+{
+  "width": 800,
+  "height": 600,
+  "background_color": "B8B8B8",
+  "objects": [
+    { 
+      "type":"line",
+      "color":"FF3333",
+      "x_1":50,
+      "y_1":50,
+      "x_2":500,
+      "y_2":160
+    }
+  ]
+}
+  

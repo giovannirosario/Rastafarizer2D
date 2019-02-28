@@ -37,32 +37,6 @@ void Canvas::draw_background(Color bg_color) {
         this->canvas[i] = bg_color;
     }
 }
-void Canvas::draw_line(Point2D start, Point2D end, Color color) {
-    unsigned int x_1 = start.get_x();
-    unsigned int y_1 = start.get_y();
-    unsigned int x_2 = end.get_x();
-    unsigned int y_2 = end.get_y();
-
-
-    float delta_x = x_2 - x_1;
-    float delta_y = y_2 - y_1;
-    float p_k = 2 * (delta_y - delta_x);
-
-    unsigned int x = x_1;
-    unsigned int y = y_1;
-
+void Canvas::draw_pixel(int x, int y, Color color) {
     this->canvas[y * get_width() + x] = color;
-
-    for(x = x + 1; x < x_2; x++) {
-        if (p_k < 0) {
-            p_k += 2 * delta_y;
-        }
-            
-        else {
-            y++;
-            p_k += 2 * delta_y - 2 * delta_x;
-        }
-
-        this->canvas[y * get_width() + x] = color;
-    }
  }

@@ -20,7 +20,7 @@ class Canvas {
         unsigned int get_height();
         Color * get_canvas();
         void draw_background(Color bg_color);
-        void draw_line(Point2D start, Point2D end, Color color);
+        void draw_pixel(int x, int y, Color color);
 };
 
 #endif

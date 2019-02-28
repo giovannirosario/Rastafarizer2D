@@ -36,6 +36,21 @@ void SceneBuilder::draw_scene(std::string f_name) {
     if (scene_json.HasMember("background_color")) {
         bg_color = hex_to_color(scene_json["background_color"].GetString());
     }
+
+    if (scene_json.HasMember("elements")) {
+        const Value& elements = scene_json["elements"];
+        for (SizeType i = 0; i < elements.Size(); i++) {
+            rapidjson::Document scene_element;
+            scene_element.Parse(elements[i].GetString());
+             if (scene_element.HasMember("type")) {
+                std::string element_type (scene_element["type"].GetString());
+                if (element_type == "line") {
+
+                }
+            }
+        }
+    }
+
 }
 
 Color SceneBuilder::hex_to_color(const char * hex_string) {
@@ -44,4 +59,8 @@ Color SceneBuilder::hex_to_color(const char * hex_string) {
     std::cout << r << g << b << std::endl;
     Color c = Color(r,g,b);
     return c;
+}
+
+void SceneBuilder::draw_line(rapidjson::Document line_json) {
+    
 }
