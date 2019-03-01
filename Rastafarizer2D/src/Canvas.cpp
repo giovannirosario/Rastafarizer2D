@@ -1,6 +1,8 @@
 #include "Canvas.h"
 #include "Color.h"
 
+Canvas::Canvas() {}
+
 Canvas::Canvas(unsigned int width, unsigned int height) {
     this->width = width;
     this->height = height;

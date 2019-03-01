@@ -1,9 +1,14 @@
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include "rapidjson/prettywriter.h"
+
 #include "SceneBuilder.h"
 #include "Color.h"
 #include "Line.h"
+#include "Exporter.h"
+#include "Canvas.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -19,7 +24,12 @@ void SceneBuilder::read_file(std::string f_name) {
     scene = buffer.str();
 }
 
-void SceneBuilder::build_scene(std::string f_name) {
+void SceneBuilder::write_file(std::string f_name) {
+    Exporter exporter;
+    exporter.export_ppm(this->canvas, f_name);
+}
+
+void SceneBuilder::build_scene() {
     rapidjson::Document scene_json;
     scene_json.Parse(scene.c_str());
 
@@ -39,39 +49,38 @@ void SceneBuilder::build_scene(std::string f_name) {
     }
 
     if (scene_json.HasMember("objects")) {
-        const rapidjson::Value& objects = scene_json["objects"];
-        for (rapidjson::SizeType i = 0; i < objects.Size(); i++) {
-            rapidjson::Document scene_object;
-            scene_object.Parse(objects[i].GetString());
-            if (scene_object.HasMember("type")) {
-                std::string object_type (scene_object["type"].GetString());
-                if (object_type == "line") {
-                    build_line(objects[i].GetString());
-                }
-            }
-        }
+       for (auto& obj : scene_json["objects"].GetArray()) {
+           if(obj.HasMember("type")) {
+               std::string type = obj["type"].GetString();
+               if (type == "line") {
+                   build_line(obj);
+               }
+           }
+       }
     }
+
+    canvas.set_width(width);
+    canvas.set_height(height);
+    canvas.draw_background(bg_color);
 }
 
-void SceneBuilder::build_line(const char * object_string) {
-    rapidjson::Document object_json;
-    object_json.Parse(object_string);
+void SceneBuilder::build_line(const rapidjson::Value& _pt) {
     int x1, y1;
     int x2, y2;
     Color color;
 
-    if (object_json.HasMember("color")) {
-        color = hex_to_color(object_json["color"].GetString());
+    if (_pt.HasMember("color")) {
+        color = hex_to_color(_pt["color"].GetString());
     }
 
-    if (object_json.HasMember("start")) {
-        const rapidjson::Value& values = object_json["start"];
+    if (_pt.HasMember("start")) {
+        const rapidjson::Value& values = _pt["start"];
         x1 = values[0].GetInt();
         y1 = values[1].GetInt();
     }
     
-    if (object_json.HasMember("end")) {
-        const rapidjson::Value& values = object_json["end"];
+    if (_pt.HasMember("end")) {
+        const rapidjson::Value& values = _pt["end"];
         x2 = values[0].GetInt();
         y2 = values[1].GetInt();
     }
@@ -80,16 +89,23 @@ void SceneBuilder::build_line(const char * object_string) {
     objects.push_back(line);
 }
 
-void SceneBuilder::draw_scene(Canvas canvas) {
+void SceneBuilder::draw_scene() {
     for ( auto obj = objects.begin(); obj != objects.end(); obj++ ) {
-        obj->draw(canvas);
+        obj->draw(this->canvas);
+        std::cout << obj->debug();
     }
 }
 
 Color SceneBuilder::hex_to_color(const char * hex_string) {
     int r, g, b;
     sscanf(hex_string, "%02x%02x%02x", &r, &g, &b);
-    std::cout << r << g << b << std::endl;
     Color c = Color(r,g,b);
     return c;
+}
+
+void SceneBuilder::raster(std::string f_in, std::string f_out) {
+    read_file(f_in);
+    build_scene();
+    draw_scene();
+    write_file(f_out);
 }

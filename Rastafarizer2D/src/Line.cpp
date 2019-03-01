@@ -43,3 +43,10 @@ void Line::draw(Canvas canvas) {
         canvas.draw_pixel(x,y,color);
     }
 }
+
+std::string Line::debug() {
+    std::string r;
+    r = start.get_x() + start.get_y() + end.get_x() + end.get_y();
+    std::cout << "uahs";
+    return r;
+}

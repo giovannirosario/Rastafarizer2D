@@ -2,6 +2,7 @@
 #define _OBJECT_H_
 #include "Color.h"
 #include "Canvas.h"
+#include <iostream>
 
 class Object {
     private: 
