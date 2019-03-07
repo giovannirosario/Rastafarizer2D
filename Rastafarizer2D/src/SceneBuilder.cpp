@@ -8,6 +8,7 @@
 #include "Line.h"
 #include "Exporter.h"
 #include "Canvas.h"
+#include "Circle.h"
 
 #include <iostream>
 #include <fstream>
@@ -55,6 +56,9 @@ void SceneBuilder::build_scene() {
                if (type == "line") {
                    build_line(obj);
                }
+               else if (type == "circle") {
+                   build_circle(obj);
+               }
            }
        }
     }
@@ -85,6 +89,29 @@ void SceneBuilder::build_line(const rapidjson::Value& _pt) {
     }
 
     Object * obj = new Line(Point2D(x1,y1), Point2D(x2,y2), color);
+    objects.push_back(obj);
+}
+
+void SceneBuilder::build_circle(const rapidjson::Value& _pt) {
+    int x1, y1;
+    int radius;
+    Color color;
+
+    if (_pt.HasMember("color")) {
+        color = hex_to_color(_pt["color"].GetString());
+    }
+
+    if (_pt.HasMember("start")) {
+        const rapidjson::Value& values = _pt["start"];
+        x1 = values[0].GetInt();
+        y1 = values[1].GetInt();
+    }
+    
+    if (_pt.HasMember("radius")) {
+       radius = _pt["radius"].GetInt();
+    }
+
+    Object * obj = new Circle(Point2D(x1,y1), radius, color);
     objects.push_back(obj);
 }
 
