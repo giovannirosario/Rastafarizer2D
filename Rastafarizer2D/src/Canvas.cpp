@@ -1,5 +1,6 @@
 #include "Canvas.h"
 #include "Color.h"
+#include <iostream>
 
 Canvas::Canvas() {}
 
@@ -7,18 +8,15 @@ Canvas::Canvas(unsigned int width, unsigned int height) {
     this->width = width;
     this->height = height;
     
-    this->canvas = new Color[width * height];
+    canvas = new Color[width * height];
 }
 
 Canvas::~Canvas() {}
 
-void Canvas::set_width(unsigned int width) {
+void Canvas::set_size(unsigned int width, unsigned int height) {
     this->width = width;
-    this->canvas = new Color[width * height];
-}
-void Canvas::set_height(unsigned int height) {
-    this->height = height;
-    this->canvas = new Color[width * height];
+    this->height = height;;
+    canvas = new Color[width * height];
 }
 
 unsigned int Canvas::get_width() {
@@ -30,7 +28,7 @@ unsigned int Canvas::get_height() {
 }
 
 Color * Canvas::get_canvas() {
-    return this->canvas;
+    return canvas;
 }
 
 void Canvas::draw_background(Color bg_color) {
@@ -40,5 +38,5 @@ void Canvas::draw_background(Color bg_color) {
     }
 }
 void Canvas::draw_pixel(int x, int y, Color color) {
-    this->canvas[y * get_width() + x] = color;
+    canvas[y * get_width() + x] = color;
  }

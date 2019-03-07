@@ -26,7 +26,7 @@ void SceneBuilder::read_file(std::string f_name) {
 
 void SceneBuilder::write_file(std::string f_name) {
     Exporter exporter;
-    exporter.export_ppm(this->canvas, f_name);
+    exporter.export_ppm(canvas, f_name);
 }
 
 void SceneBuilder::build_scene() {
@@ -58,9 +58,8 @@ void SceneBuilder::build_scene() {
            }
        }
     }
-
-    canvas.set_width(width);
-    canvas.set_height(height);
+    std::cout << width << " " << height << std::endl;
+    canvas.set_size(width, height);
     canvas.draw_background(bg_color);
 }
 
@@ -85,14 +84,13 @@ void SceneBuilder::build_line(const rapidjson::Value& _pt) {
         y2 = values[1].GetInt();
     }
 
-    Line line = Line(Point2D(x1,y1), Point2D(x2,y2), color);
-    objects.push_back(line);
+    Object * obj = new Line(Point2D(x1,y1), Point2D(x2,y2), color);
+    objects.push_back(obj);
 }
 
 void SceneBuilder::draw_scene() {
-    for ( auto obj = objects.begin(); obj != objects.end(); obj++ ) {
-        obj->draw(this->canvas);
-        std::cout << obj->debug();
+    for (unsigned int i = 0; i < objects.size(); i++) {
+        objects[i]->draw(canvas);
     }
 }
 

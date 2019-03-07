@@ -1,13 +1,13 @@
 {
   "width": 800,
   "height": 600,
-  "background_color": "B8B8B8",
+  "background_color": "000000",
   "objects": [
     { 
       "type":"line",
       "color":"FF3333",
-      "start":[50,10],
-      "end":[30,20]
+      "start":[300,120],
+      "end":[50,50]
     }
   ]
 }

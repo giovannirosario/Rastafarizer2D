@@ -3,12 +3,6 @@
 
 Object::Object() {}
 
-Object::~Object() {} 
-
-Color Object::get_color() {
-    return this->color;
-}
-
-void Object::set_color(Color color) {
-    this->color = color;
+void Object::draw(Canvas& canvas) {
+    draw_shape(canvas);
 }

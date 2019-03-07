@@ -14,7 +14,7 @@ class SceneBuilder {
     private:
         Canvas canvas;
         std::string scene;
-        std::vector<Object> objects; 
+        std::vector<Object*> objects; 
         
     public:
         SceneBuilder();
