@@ -10,7 +10,7 @@ Line::Line() {}
 Line::Line(Point2D start, Point2D end, Color color) {
     this->start = start;
     this->end = end;
-    set_color(color);
+    this->color = color;
 }
 
 Line::~Line() {}
