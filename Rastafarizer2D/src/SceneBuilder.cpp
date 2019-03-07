@@ -58,7 +58,7 @@ void SceneBuilder::build_scene() {
            }
        }
     }
-    std::cout << width << " " << height << std::endl;
+
     canvas.set_size(width, height);
     canvas.draw_background(bg_color);
 }
