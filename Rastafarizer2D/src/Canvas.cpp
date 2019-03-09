@@ -38,7 +38,9 @@ void Canvas::draw_background(Color bg_color) {
     }
 }
 void Canvas::draw_pixel(int x, int y, Color color) {
-    if(x >= 0 && y >= 0) {
-        canvas[y * get_width() + x] = color;
+    if(x >= 0 && y >= 0) { 
+        if ((y * get_width() + x) <= (get_width() * get_height())-1) {
+            canvas[y * get_width() + x] = color;
+        }
     }
  }

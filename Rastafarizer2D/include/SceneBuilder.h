@@ -24,6 +24,7 @@ class SceneBuilder {
         void build_scene();
         void build_line(const rapidjson::Value& _pt);
         void build_circle(const rapidjson::Value& _pt);
+        void build_polygon(const rapidjson::Value& _pt);
         void draw_scene();
         Color hex_to_color(const char * hex_string);
         void raster(std::string f_in, std::string f_out);

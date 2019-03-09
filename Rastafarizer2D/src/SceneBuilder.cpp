@@ -9,7 +9,7 @@
 #include "Exporter.h"
 #include "Canvas.h"
 #include "Circle.h"
-
+#include "Polygon.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -59,6 +59,10 @@ void SceneBuilder::build_scene() {
                else if (type == "circle") {
                    build_circle(obj);
                }
+
+               else if (type == "polygon") {
+                   build_polygon(obj);
+               }
            }
        }
     }
@@ -95,10 +99,19 @@ void SceneBuilder::build_line(const rapidjson::Value& _pt) {
 void SceneBuilder::build_circle(const rapidjson::Value& _pt) {
     int x1, y1;
     int radius;
-    Color color;
+    bool fill = false;
+    Color stroke_color;
+    Color fill_color;
+    Object * obj;
 
-    if (_pt.HasMember("color")) {
-        color = hex_to_color(_pt["color"].GetString());
+
+    if (_pt.HasMember("stroke_color")) {
+        stroke_color = hex_to_color(_pt["stroke_color"].GetString());
+    }
+
+    if (_pt.HasMember("fill_color")) {
+        fill_color = hex_to_color(_pt["fill_color"].GetString());
+        fill = true;
     }
 
     if (_pt.HasMember("start")) {
@@ -110,10 +123,46 @@ void SceneBuilder::build_circle(const rapidjson::Value& _pt) {
     if (_pt.HasMember("radius")) {
        radius = _pt["radius"].GetInt();
     }
+    
+    obj = new Circle(Point2D(x1,y1), radius, stroke_color);
+    
 
-    Object * obj = new Circle(Point2D(x1,y1), radius, color);
     objects.push_back(obj);
 }
+
+void SceneBuilder::build_polygon(const rapidjson::Value& _pt) {
+    Color stroke_color;
+    Color fill_color;
+    std::vector <Point2D> points;
+    bool fill = false;
+    Object * obj;
+
+    if (_pt.HasMember("stroke_color")) {
+        stroke_color = hex_to_color(_pt["stroke_color"].GetString());
+    }
+
+    if (_pt.HasMember("fill_color")) {
+        fill_color = hex_to_color(_pt["fill_color"].GetString());
+        fill = true;
+    }
+
+    if (_pt.HasMember("points")) {
+        const rapidjson::Value& a = _pt["points"];
+        for (rapidjson::SizeType i = 0; i < a.Size()-1; i = i+2) {
+            Point2D point = Point2D(a[i].GetInt(),a[i+1].GetInt());
+            points.push_back(point);
+        }
+    }
+
+    if (fill) {
+        obj = new Polygon(points, stroke_color, fill_color);
+    } else {
+        obj = new Polygon(points, stroke_color);
+    }
+
+    objects.push_back(obj);
+}
+
 
 void SceneBuilder::draw_scene() {
     for (unsigned int i = 0; i < objects.size(); i++) {
