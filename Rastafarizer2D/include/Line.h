@@ -11,12 +11,13 @@ class Line : public Object {
         Point2D start;
         Point2D end;
         Color color;
-        void draw_lineHigh(Canvas& canvas);
-        void draw_lineLow(Canvas& canvas);
+        int thickness;
+        void draw_lineHigh(Canvas& canvas, int x1, int y1, int x2, int y2);
+        void draw_lineLow(Canvas& canvas, int x1, int y1, int x2, int y2);
         
     public:
         Line();
-        Line(Point2D start, Point2D end, Color color);
+        Line(Point2D start, Point2D end, Color color, int thickness = 1);
         ~Line();
         void draw_shape(Canvas& canvas);
         Color get_color();
