@@ -13,7 +13,8 @@ class Point2D {
 		~Point2D();
 		unsigned int get_x();
 		unsigned int get_y();
-		bool operator==(const Point2D &Point2D);	
+		bool operator==(const Point2D &Point2D);
+		bool operator<(const Point2D& b);
 };
 
 #endif

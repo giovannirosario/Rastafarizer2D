@@ -27,4 +27,8 @@ bool Point2D::operator==(const Point2D &Point2D) {
 	return result;
 }
 
+bool Point2D::operator<(const Point2D& b ) { 
+	return this->x < b.x; 
+}
+
 
