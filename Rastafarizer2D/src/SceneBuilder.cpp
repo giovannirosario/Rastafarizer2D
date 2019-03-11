@@ -74,6 +74,7 @@ void SceneBuilder::build_scene() {
 void SceneBuilder::build_line(const rapidjson::Value& _pt) {
     int x1, y1;
     int x2, y2;
+    int thickness = 1;
     Color color;
 
     if (_pt.HasMember("color")) {
@@ -92,13 +93,18 @@ void SceneBuilder::build_line(const rapidjson::Value& _pt) {
         y2 = values[1].GetInt();
     }
 
-    Object * obj = new Line(Point2D(x1,y1), Point2D(x2,y2), color);
+    if (_pt.HasMember("thickness")) {
+        thickness = _pt["thickness"].GetInt();
+    }
+
+    Object * obj = new Line(Point2D(x1,y1), Point2D(x2,y2), color, thickness);
     objects.push_back(obj);
 }
 
 void SceneBuilder::build_circle(const rapidjson::Value& _pt) {
     int x1, y1;
     int radius;
+    int thickness = 1;
     bool fill = false;
     Color stroke_color;
     Color fill_color;
@@ -124,6 +130,10 @@ void SceneBuilder::build_circle(const rapidjson::Value& _pt) {
        radius = _pt["radius"].GetInt();
     }
     
+    if (_pt.HasMember("thickness")) {
+        thickness = _pt["thickness"].GetInt();
+    }
+    
     obj = new Circle(Point2D(x1,y1), radius, stroke_color);
     
 
@@ -133,6 +143,7 @@ void SceneBuilder::build_circle(const rapidjson::Value& _pt) {
 void SceneBuilder::build_polygon(const rapidjson::Value& _pt) {
     Color stroke_color;
     Color fill_color;
+    int thickness = 1;
     std::vector <Point2D> points;
     bool fill = false;
     Object * obj;
@@ -154,10 +165,14 @@ void SceneBuilder::build_polygon(const rapidjson::Value& _pt) {
         }
     }
 
+    if (_pt.HasMember("thickness")) {
+        thickness = _pt["thickness"].GetInt();
+    }
+
     if (fill) {
-        obj = new Polygon(points, stroke_color, fill_color);
+        obj = new Polygon(points, stroke_color, fill_color, thickness);
     } else {
-        obj = new Polygon(points, stroke_color);
+        obj = new Polygon(points, stroke_color, thickness);
     }
 
     objects.push_back(obj);

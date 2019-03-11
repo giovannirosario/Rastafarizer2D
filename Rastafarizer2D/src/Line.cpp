@@ -60,7 +60,13 @@ void Line::draw_lineHigh(Canvas& canvas, int x1, int y1, int x2, int y2) {
 
     float p_k = 2 * (delta_x - delta_y);
     
+
     canvas.draw_pixel(x,y,color);
+
+    for(int i = 1; i < thickness; i++) {
+        canvas.draw_pixel(x+i,y,color);
+        canvas.draw_pixel(x-i,y,color);
+    }
 
     for(y = y + 1; y <= y2; y++) {
         if (p_k < 0) {
@@ -72,6 +78,11 @@ void Line::draw_lineHigh(Canvas& canvas, int x1, int y1, int x2, int y2) {
             p_k += 2 * delta_x - 2 * delta_y;
         }
         canvas.draw_pixel(x,y,color);
+
+        for(int i = 1; i < thickness; i++) {
+            canvas.draw_pixel(x+i,y,color);
+            canvas.draw_pixel(x-i,y,color);
+        }
     }
 }
 
@@ -91,20 +102,24 @@ void Line::draw_lineLow(Canvas& canvas, int x1, int y1, int x2, int y2) {
     float p_k = 2 * (delta_y - delta_x);
 
     canvas.draw_pixel(x,y,color);
-    
-    for(int i = 0; i < thickness; i++) {
+    for(int i = 1; i < thickness; i++) {
+        canvas.draw_pixel(x,y-i,color);
+        canvas.draw_pixel(x,y+i,color);
+    }
 
+    for(x = x + 1; x <= x2; x++) {
+        if (p_k < 0) {
+            p_k += 2 * delta_y;
+        }
+            
+        else {
+            y = y + dir;
+            p_k += 2 * delta_y - 2 * delta_x;
+        }
         canvas.draw_pixel(x,y,color);
-        for(x = x + 1; x <= x2; x++) {
-            if (p_k < 0) {
-                p_k += 2 * delta_y;
-            }
-                
-            else {
-                y = y + dir;
-                p_k += 2 * delta_y - 2 * delta_x;
-            }
-            canvas.draw_pixel(x,y,color);
+        for(int i = 1; i < thickness; i++) {
+            canvas.draw_pixel(x,y-i,color);
+            canvas.draw_pixel(x,y+i,color);
         }
     }
 }

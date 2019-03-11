@@ -12,12 +12,13 @@ class Polygon : public Object {
         std::vector<Point2D> points;
         Color fill_color;
         Color stroke_color;
+        int thickness;
         bool fill;
 
     public:
         Polygon();
-        Polygon(std::vector<Point2D> points, Color stroke_color);
-        Polygon(std::vector<Point2D> points, Color stroke_color, Color fill_color);
+        Polygon(std::vector<Point2D> points, Color stroke_color, int thickness = 1);
+        Polygon(std::vector<Point2D> points, Color stroke_color, Color fill_color, int thickness = 1);
         ~Polygon();
         void draw_shape(Canvas& canvas);
 };
