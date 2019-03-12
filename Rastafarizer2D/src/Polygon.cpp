@@ -3,6 +3,7 @@
 #include "Point2D.h"
 #include "Color.h"
 #include "Line.h"
+#include "ScanlineFill.h"
 
 Polygon::Polygon() {}
 
@@ -16,7 +17,7 @@ Polygon::Polygon(std::vector<Point2D> points, Color stroke_color, int thickness)
 Polygon::Polygon(std::vector<Point2D> points, Color stroke_color, Color fill_color, int thickness) {
     this->stroke_color = stroke_color;
     this->fill_color = fill_color;
-    this->fill = false;
+    this->fill = true;
     this->points = points;
     this->thickness = thickness;
 }
@@ -33,10 +34,6 @@ void Polygon::draw_shape(Canvas& canvas) {
     temp_line.draw_shape(canvas);
     
     if (fill) {
-        
+        ScanlineFill(canvas, points, fill_color);
     }
-}
-
-void Polygon::scanline_fill(Canvas& canvas) {
-    
 }

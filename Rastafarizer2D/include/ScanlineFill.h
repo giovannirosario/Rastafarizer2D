@@ -5,23 +5,24 @@
 #include "Canvas.h"
 #include <vector>
 
+struct Edge {
+    int y_max;
+    int y_min;
+    float x;
+    int d_x;
+    int d_y;
+};
+
 class ScanlineFill {
     private:
-        struct Edge {
-            Point2D start;
-            Point2D end;
-            int slope;
-        };
-
-        int y_min;
-        int y_max;
-        
         Canvas * canvas;
-        std::vector<Point2D> vertices;
-        std::vector<Edge> Edges;
+        std::vector<Point2D> points;
+        std::vector<Edge> edges;
+        std::vector<Edge> active_list;
+        Color color;
 
     public:
-        ScanlineFill(Canvas& canvas, std::vector<Point2D> points);
+        ScanlineFill(Canvas& canvas, std::vector<Point2D> points, Color color);
         ~ScanlineFill();
         void initEdges();
         void fill();
