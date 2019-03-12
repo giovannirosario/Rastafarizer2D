@@ -6,8 +6,35 @@
     { 
       "type":"line",
       "color":"FF3333",
-      "start":[10,100],
-      "end":[10,300]
+      "thickness":3,
+      "start":[320,195],
+      "end":[355,195]
+    },
+    {
+      "type":"circle",
+      "stroke_color":"230192",
+      "fill_color":"FF3333",
+      "start":[60,60],
+      "radius":30
+    },
+    {
+      "type":"polygon",
+      "stroke_color":"FF3333",
+      "thickness":1,
+      "points":[350,75,379,161,469,161,397,215,423,301,350,250,277,301,303,215,231,161,321,161]
+    },
+    {
+      "type":"polyline",
+      "stroke_color":"FF3333",
+      "thickness":1,
+      "points":[350,75,379,161,469,161,397,215,423,301,350,250,277,301,303,215,231,161,321,161]
+    }
+  ],
+
+  "flood_fill": [
+    { 
+      "color":"0000FF",
+      "start":[350,200]
     }
   ]
 }
