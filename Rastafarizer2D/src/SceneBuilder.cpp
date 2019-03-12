@@ -10,6 +10,7 @@
 #include "Canvas.h"
 #include "Circle.h"
 #include "Polygon.h"
+#include "Polyline.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -62,6 +63,10 @@ void SceneBuilder::build_scene() {
 
                else if (type == "polygon") {
                    build_polygon(obj);
+               }
+
+               else if (type == "polyline") {
+                   build_polyline(obj);
                }
            }
        }
@@ -178,6 +183,32 @@ void SceneBuilder::build_polygon(const rapidjson::Value& _pt) {
         obj = new Polygon(points, stroke_color, thickness);
     }
 
+    objects.push_back(obj);
+}
+
+void SceneBuilder::build_polyline(const rapidjson::Value& _pt) {
+    Color stroke_color;
+    int thickness = 1;
+    std::vector <Point2D> points;
+    Object * obj;
+
+    if (_pt.HasMember("stroke_color")) {
+        stroke_color = hex_to_color(_pt["stroke_color"].GetString());
+    }
+
+    if (_pt.HasMember("points")) {
+        const rapidjson::Value& a = _pt["points"];
+        for (rapidjson::SizeType i = 0; i < a.Size()-1; i = i+2) {
+            Point2D point = Point2D(a[i].GetInt(),a[i+1].GetInt());
+            points.push_back(point);
+        }
+    }
+
+    if (_pt.HasMember("thickness")) {
+        thickness = _pt["thickness"].GetInt();
+    }
+
+    obj = new Polyline(points, stroke_color, thickness);
     objects.push_back(obj);
 }
 
