@@ -84,7 +84,6 @@ void ScanlineFill::fill() {
         for(int i = 0; i < active_list.size(); i = i+2) {
             int x1 = active_list[i].x;
             int x2 = active_list[i+1].x;
-            std::cout << x1 << " " << x2 << std::endl;
 
             for(int i = x1; i < x2; i++) {
                 canvas->draw_pixel(i,y_pos,color);
@@ -96,7 +95,6 @@ void ScanlineFill::fill() {
         for(int i = 0; i < active_list.size(); i++) {
             if(active_list[i].d_y != 0) {
                 active_list[i].x += ((double) active_list[i].d_x/active_list[i].d_y);
-                std::cout << active_list[i].d_x << "." << active_list[i].d_y << std::endl;
             }
         }
     }
