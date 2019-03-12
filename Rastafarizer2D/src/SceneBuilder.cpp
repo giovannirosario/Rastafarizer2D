@@ -133,9 +133,12 @@ void SceneBuilder::build_circle(const rapidjson::Value& _pt) {
     if (_pt.HasMember("thickness")) {
         thickness = _pt["thickness"].GetInt();
     }
-    
-    obj = new Circle(Point2D(x1,y1), radius, stroke_color);
-    
+
+    if (fill) {
+        obj = new Circle(Point2D(x1,y1), radius, stroke_color, fill_color);
+    } else {
+        obj = new Circle(Point2D(x1,y1), radius, stroke_color);
+    }
 
     objects.push_back(obj);
 }

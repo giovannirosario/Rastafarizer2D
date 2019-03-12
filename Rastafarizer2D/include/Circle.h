@@ -10,11 +10,16 @@ class Circle : public Object {
     private:
         Point2D start;
         int radius;
-        Color color;
+        Color fill_color;
+        Color stroke_color;
+        int thickness;
+        bool fill;
+        void fill_line(Canvas& canvas,int x1, int x2, int y, Color color);
         
     public:
         Circle();
-        Circle(Point2D start, int radius, Color color);
+        Circle(Point2D start, int radius, Color stroke_color, int thickness = 1);
+        Circle(Point2D start, int radius, Color stroke_color, Color fill_color, int thickness = 1);
         ~Circle();
         void draw_shape(Canvas& canvas);
         Color get_color();

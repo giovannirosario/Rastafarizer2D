@@ -2,14 +2,26 @@
 #include "Canvas.h"
 #include "Point2D.h"
 #include "Color.h"
+#include "Line.h"
 
 Circle::Circle() {}
 
-Circle::Circle(Point2D start, int radius, Color color) {
+Circle::Circle(Point2D start, int radius, Color stroke_color, int thickness) {
     this->start = start;
     this->radius = radius;
-    this->color = color;
+    this->stroke_color = stroke_color;
+    this->thickness = thickness;
 }
+
+Circle::Circle(Point2D start, int radius, Color stroke_color, Color fill_color, int thickness) {
+    this->start = start;
+    this->radius = radius;
+    this->stroke_color = stroke_color;
+    this->fill_color = fill_color;
+    this->thickness = thickness;
+    this->fill = true;
+}
+
 
 Circle::~Circle() {}
 
@@ -23,14 +35,21 @@ void Circle::draw_shape(Canvas& canvas) {
     int err = dx - (radius << 1);
 
     while (x >= y) {
-        canvas.draw_pixel(x0 + x, y0 + y, color);
-        canvas.draw_pixel(x0 + y, y0 + x, color);
-        canvas.draw_pixel(x0 - y, y0 + x, color);
-        canvas.draw_pixel(x0 - x, y0 + y, color);
-        canvas.draw_pixel(x0 - x, y0 - y, color);
-        canvas.draw_pixel(x0 - y, y0 - x, color);
-        canvas.draw_pixel(x0 + y, y0 - x, color);
-        canvas.draw_pixel(x0 + x, y0 - y, color);
+        if (fill) {
+            fill_line(canvas, x0 - y, x0 + y, y0 + x, fill_color);
+            fill_line(canvas, x0 - x, x0 + x, y0 + y, fill_color);
+            fill_line(canvas, x0 - y, x0 + y, y0 - x, fill_color);
+            fill_line(canvas, x0 - x, x0 + x, y0 - y, fill_color);
+        }
+        
+        canvas.draw_pixel(x0 + x, y0 + y, stroke_color);
+        canvas.draw_pixel(x0 + y, y0 + x, stroke_color);
+        canvas.draw_pixel(x0 - y, y0 + x, stroke_color);
+        canvas.draw_pixel(x0 - x, y0 + y, stroke_color);
+        canvas.draw_pixel(x0 - x, y0 - y, stroke_color);
+        canvas.draw_pixel(x0 - y, y0 - x, stroke_color);
+        canvas.draw_pixel(x0 + y, y0 - x, stroke_color);
+        canvas.draw_pixel(x0 + x, y0 - y, stroke_color);
 
         if (err <= 0)
         {
@@ -49,9 +68,15 @@ void Circle::draw_shape(Canvas& canvas) {
 }
 
 Color Circle::get_color() {
-    return this->color;
+    return this->stroke_color;
 }
 
 void Circle::set_color(Color color) {
-    this->color = color;
+    this->stroke_color = color;
+}
+
+void Circle::fill_line(Canvas& canvas,int x1, int x2, int y, Color color) {
+    for (int i = x1; i < x2; i++) {
+        canvas.draw_pixel(i,y,color);
+    }
 }
