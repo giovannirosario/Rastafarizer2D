@@ -4,6 +4,7 @@
 #include "rapidjson/prettywriter.h"
 
 #include "SceneBuilder.h"
+#include "FloodFill.h"
 #include "Color.h"
 #include "Line.h"
 #include "Exporter.h"
@@ -226,9 +227,36 @@ Color SceneBuilder::hex_to_color(const char * hex_string) {
     return c;
 }
 
+void SceneBuilder::flood_fill(){
+    rapidjson::Document scene_json;
+    scene_json.Parse(scene.c_str());
+
+    Color color;
+    int x,y;
+
+    if (scene_json.HasMember("flood_fill")) {
+       for (auto& obj : scene_json["flood_fill"].GetArray()) {
+           if (obj.HasMember("color")) {
+                color = hex_to_color(obj["color"].GetString());
+            }
+
+            if (obj.HasMember("start")) {
+                const rapidjson::Value& values = obj["start"];
+                x = values[0].GetInt();
+                y = values[1].GetInt();
+            }
+            
+            FloodFill(canvas,x,y,color);
+       }
+    }
+
+}
+
+
 void SceneBuilder::raster(std::string f_in, std::string f_out) {
     read_file(f_in);
     build_scene();
     draw_scene();
+    flood_fill();
     write_file(f_out);
 }
