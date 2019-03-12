@@ -35,3 +35,9 @@ Color Color::operator=(const Color &color) {
     
     return *this;
 }
+
+bool Color::operator==(const Color &color) {
+	return (this->rgb[0] == color.rgb[0] &&
+            this->rgb[1] == color.rgb[1] &&
+            this->rgb[2] == color.rgb[2]);
+}

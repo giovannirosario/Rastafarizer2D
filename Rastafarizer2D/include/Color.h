@@ -14,6 +14,7 @@ class Color {
         unsigned char get_g();
         unsigned char get_b();
         Color operator=(const Color &color);
+        bool operator==(const Color &color);
 };  
 
 #endif
