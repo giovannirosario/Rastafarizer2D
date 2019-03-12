@@ -20,12 +20,12 @@ class ScanlineFill {
         std::vector<Edge> edges;
         std::vector<Edge> active_list;
         Color color;
+        void initEdges();
+        void fill();
 
     public:
         ScanlineFill(Canvas& canvas, std::vector<Point2D> points, Color color);
         ~ScanlineFill();
-        void initEdges();
-        void fill();
 };
 
 #endif
