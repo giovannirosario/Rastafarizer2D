@@ -10,6 +10,7 @@
 #include "Exporter.h"
 #include "Canvas.h"
 #include "Circle.h"
+#include "CircleArc.h"
 #include "Polygon.h"
 #include "Polyline.h"
 #include <iostream>
@@ -68,6 +69,10 @@ void SceneBuilder::build_scene() {
 
                else if (type == "polyline") {
                    build_polyline(obj);
+               }
+
+               else if (type == "circle_arc") {
+                   build_circle_arc(obj);
                }
            }
        }
@@ -213,6 +218,44 @@ void SceneBuilder::build_polyline(const rapidjson::Value& _pt) {
     objects.push_back(obj);
 }
 
+void SceneBuilder::build_circle_arc(const rapidjson::Value& _pt) {
+    int x1, y1;
+    int x2, y2;
+    int angle;
+    int thickness = 1;
+    Color stroke_color;
+
+    Object * obj;
+
+
+    if (_pt.HasMember("stroke_color")) {
+        stroke_color = hex_to_color(_pt["stroke_color"].GetString());
+    }
+
+    if (_pt.HasMember("center")) {
+        const rapidjson::Value& values = _pt["center"];
+        x1 = values[0].GetInt();
+        y1 = values[1].GetInt();
+    }
+
+    if (_pt.HasMember("start")) {
+        const rapidjson::Value& values = _pt["start"];
+        x2 = values[0].GetInt();
+        y2 = values[1].GetInt();
+    }
+    
+    if (_pt.HasMember("angle")) {
+       angle = _pt["angle"].GetInt();
+    }
+    
+    if (_pt.HasMember("thickness")) {
+        thickness = _pt["thickness"].GetInt();
+    }
+
+    obj = new CircleArc(Point2D(x1,y1), Point2D(x2,y2), angle, stroke_color, thickness);
+
+    objects.push_back(obj);
+}
 
 void SceneBuilder::draw_scene() {
     for (unsigned int i = 0; i < objects.size(); i++) {
