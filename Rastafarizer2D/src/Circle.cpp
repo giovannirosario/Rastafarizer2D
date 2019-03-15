@@ -76,7 +76,12 @@ void Circle::set_color(Color color) {
 }
 
 void Circle::fill_line(Canvas& canvas,int x1, int x2, int y, Color color) {
+    bool anti_aliasing = canvas.is_antiAliasing();
+    canvas.set_antiAliasing(false);
+
     for (int i = x1; i < x2; i++) {
         canvas.draw_pixel(i,y,color);
     }
+
+    canvas.set_antiAliasing(anti_aliasing);
 }

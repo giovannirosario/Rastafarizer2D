@@ -10,7 +10,7 @@ FloodFill::FloodFill(Canvas& canvas, int x, int y, Color new_color) {
 
     Color * pixels = canvas.get_canvas();
     this->old_color = pixels[y * canvas.get_width() + x];
-
+    this->canvas->set_antiAliasing(false);
     fill(x,y);
 }
 

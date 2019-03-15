@@ -10,7 +10,10 @@ ScanlineFill::ScanlineFill(Canvas& canvas, std::vector<Point2D> points, Color co
     this->color = color;
 
     initEdges();
+    bool anti_aliasing = this->canvas->is_antiAliasing();
+    this->canvas->set_antiAliasing(false);
     fill();
+    this->canvas->set_antiAliasing(anti_aliasing);
 }
 
 ScanlineFill::~ScanlineFill() {}
