@@ -2,9 +2,10 @@
   "width": 800,
   "height": 600,
   "background_color": "000000",
+  "anti_aliasing":false,
   "objects": [
     { 
-      "type":"linex",
+      "type":"line",
       "color":"FF3333",
       "thickness":3,
       "start":[320,195],
