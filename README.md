@@ -29,9 +29,9 @@ Currently the Rastafarizer2D project supports the following primitives:
 3. **Circle Fill** To fill the color of Circle primitives a different algorithm was used, based on the Midpoint Algorithm.
 
 # 5. Anti-aliasing
-Anti-aliasing is supported implemented with an unweighted sample technique.
+Anti-aliasing is supported, implemented with an unweighted sample technique.
 
-![Alt text](anti_aliasing_compare.png?raw=true "AntiAliasing Comparation")
+![Alt text](anti_aliasing_compare.png?raw=true "AntiAliasing Comparison")
 
 # 6. Scene File Manual
 

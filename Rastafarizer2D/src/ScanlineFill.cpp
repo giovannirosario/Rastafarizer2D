@@ -88,7 +88,7 @@ void ScanlineFill::fill() {
             int x1 = active_list[i].x;
             int x2 = active_list[i+1].x;
 
-            for(int i = x1; i < x2; i++) {
+            for(int i = x1; i <= x2; i++) {
                 canvas->draw_pixel(i,y_pos,color);
             }   
         }
