@@ -39,6 +39,7 @@ void SceneBuilder::build_scene() {
 
     Color bg_color;
     int width, height;
+    bool anti_aliasing;
 
     if (scene_json.HasMember("width")) {
         width = scene_json["width"].GetInt();
@@ -50,6 +51,10 @@ void SceneBuilder::build_scene() {
 
     if (scene_json.HasMember("background_color")) {
         bg_color = hex_to_color(scene_json["background_color"].GetString());
+    }
+
+    if (scene_json.HasMember("anti_aliasing")) {
+        anti_aliasing = scene_json["anti_aliasing"].GetBool();
     }
 
     if (scene_json.HasMember("objects")) {
@@ -80,6 +85,7 @@ void SceneBuilder::build_scene() {
 
     canvas.set_size(width, height);
     canvas.draw_background(bg_color);
+    canvas.set_antiAliasing(anti_aliasing);
 }
 
 void SceneBuilder::build_line(const rapidjson::Value& _pt) {
