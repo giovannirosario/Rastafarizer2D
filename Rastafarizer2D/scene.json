@@ -4,7 +4,7 @@
   "background_color": "000000",
   "objects": [
     { 
-      "type":"line",
+      "type":"linex",
       "color":"FF3333",
       "thickness":3,
       "start":[320,195],
@@ -16,6 +16,13 @@
       "fill_color":"FF3333",
       "start":[60,60],
       "radius":30
+    },
+    {
+      "type":"circle_arc",
+      "stroke_color":"FF002F",
+      "center":[300,300],
+      "start":[200,250],
+      "angle":70
     },
     {
       "type":"polygon",

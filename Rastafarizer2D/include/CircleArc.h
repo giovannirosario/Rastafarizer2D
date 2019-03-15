@@ -14,15 +14,16 @@ class CircleArc : public Object {
         Color stroke_color;
         int radius;
         int thickness;
-        double angle;
-        double start_angle;
-        double end_angle;
+        int angle;
+        int start_angle;
+        int end_angle;
 
+        bool isAngleBetween(int angle);
         void draw_pixel(int x, int y, Color color, Canvas& canvas);
 
     public:
         CircleArc();
-        CircleArc(Point2D center, Point2D start, double angle, Color stroke_color, int thickness = 1);
+        CircleArc(Point2D center, Point2D start, int angle, Color stroke_color, int thickness = 1);
         void draw_shape(Canvas& canvas);
         ~CircleArc();
 };

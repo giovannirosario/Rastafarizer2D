@@ -4,10 +4,12 @@
 #include "Canvas.h"
 #include <math.h>
 
+#include <iostream>
+
 #define PI 3.14159265
 
 CircleArc::CircleArc(){}
-CircleArc::CircleArc(Point2D center, Point2D start, double angle, Color stroke_color, int thickness) {
+CircleArc::CircleArc(Point2D center, Point2D start, int angle, Color stroke_color, int thickness) {
     this->center = center;
     this->start = start;
     this->angle = angle;
@@ -15,16 +17,16 @@ CircleArc::CircleArc(Point2D center, Point2D start, double angle, Color stroke_c
     this->thickness = thickness;
     int d_x = start.get_x() - center.get_x();
     int d_y = start.get_y() - center.get_y();
-    this->start_angle = atan(d_y/d_x) * 180.0 / PI;
-    this->end_angle = start_angle + angle;
+    this->start_angle = (atan2(d_y,d_x) * 180.0 / PI) + 180;
+    this->end_angle = (start_angle + angle) % 360;
     this->radius = sqrt(d_x * d_x + d_y * d_y);
 }
 
 CircleArc::~CircleArc(){}
 
 void CircleArc::draw_shape(Canvas& canvas) {
-    int x0 = start.get_x();
-    int y0 = start.get_y();
+    int x0 = center.get_x();
+    int y0 = center.get_y();
     int x = radius - 1;
     int y = 0;
     int dx = 1;
@@ -72,10 +74,17 @@ void CircleArc::draw_pixel(int x, int y, Color color, Canvas& canvas) {
         }
     }
     else {
-        angle = atan(d_y/d_x) * 180.0 / PI;
+        angle = (atan2(d_y,d_x) * 180.0 / PI) + 180;        
     }
     
-    if (angle > start_angle && angle < end_angle) {
+    if (isAngleBetween(angle)) {
         canvas.draw_pixel(x,y, color);
     }
+}
+
+bool CircleArc::isAngleBetween(int angle) {
+    if (start_angle < end_angle) 
+        return (start_angle <= angle && angle <= end_angle);
+    else 
+        return (start_angle <= angle || angle <= end_angle);
 }
