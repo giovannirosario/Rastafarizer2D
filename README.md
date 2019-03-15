@@ -31,12 +31,12 @@ Currently the Rastafarizer2D project supports the following primitives:
 # 5. Anti-aliasing
 Anti-aliasing is supported implemented with an unweighted sample technique.
 
-![Alt text](anti_aliasing_compare.jpg?raw=true "AntiAliasing Comparation")
+![Alt text](anti_aliasing_compare.png?raw=true "AntiAliasing Comparation")
 
 # 6. Scene File Manual
 
 **Colors**  The scene file receives color in a 6-digit hexadecimal format. This guarantees support to any possible color in that format.(www.color-hex.com) is a good reference to pick.
-Or you can also set you own Pallete and use it's colors by name. Under the "pallete" key in may provide the colors in the format "name":"hexa_value", i.e:
+Or you can also set you own Pallete and use it's colors by name. Under the "pallete" key you may provide the colors in the format "name":"hexa_value", i.e:
 
 ```json
 "pallete":{
@@ -71,7 +71,7 @@ After that, you must start a key "objects" and place an JSON Array as it's value
 ```json
 {
     "type":"line",
-    "color":"FF3333",
+    "color":"red",
     "thickness":3,
     "start":[320,195],
     "end":[355,195]
