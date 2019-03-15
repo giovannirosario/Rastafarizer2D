@@ -128,6 +128,6 @@ And finally in the "flood_fill" key you may provide an array of all desired Floo
 }
 ```
 
-An example file is provided in the project folder as the name "scene.json"
+An example file is provided at "scene_files/scene.json"
 
 --------------------------------

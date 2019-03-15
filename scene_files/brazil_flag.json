@@ -1,0 +1,34 @@
+{
+    "width": 720,
+    "height": 504,
+    "background_color": "009B3A",
+    "anti_aliasing":false,
+    "pallete": {
+      "verde":"009B3A",
+      "amarelo":"FEDF00",
+      "azul":"002776"
+    },
+    "objects": [
+        {
+            "type":"polygon",
+            "stroke_color":"amarelo",
+            "fill_color":"amarelo",
+            "points":[360,63,659,252,361,441,64,253]
+        },
+        {
+          "type":"circle",
+          "stroke_color":"azul",
+          "fill_color":"azul",
+          "start":[360,250],
+          "radius":125
+        },
+        {
+          "type":"circle_arcx",
+          "stroke_color":"FF002F",
+          "center":[300,300],
+          "start":[200,250],
+          "angle":70
+        }
+      ]
+    }
+    

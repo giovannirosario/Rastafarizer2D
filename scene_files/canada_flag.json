@@ -1,0 +1,30 @@
+{
+    "width": 800,
+    "height": 400,
+    "background_color": "FFFFFF",
+    "anti_aliasing":false,
+    "pallete": {
+      "red":"FF0000"
+    },
+    "objects": [
+        {
+            "type":"polygon",
+            "stroke_color":"red",
+            "fill_color":"red",
+            "points":[200,0,200,400,0,400,0,0]
+        },
+        {
+            "type":"polygon",
+            "stroke_color":"red",
+            "fill_color":"red",
+            "points":[393,375,396,295,320,306,325,275,247,210,268,197,251,146,300,152,306,134,355,170,340,83,371,95,400,45,437,100,460,85,450,173,495,135,505,156,550,145,536,208,556,212,478,274,484,304,410,288,408,375]
+        },
+        {
+            "type":"polygon",
+            "stroke_color":"FF3333",
+            "fill_color":"red",
+            "points":[600,0,800,0,800,400,600,400]
+        }
+      ]
+    }
+    

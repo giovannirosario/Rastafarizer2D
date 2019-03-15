@@ -1,0 +1,56 @@
+{
+  "width": 800,
+  "height": 600,
+  "background_color": "000000",
+  "anti_aliasing":false,
+  "pallete": {
+    "blue":"0000FF",
+    "cyan":"00FFFF",
+    "royalblue":"4169E1",
+    "violet":"EE82EE",
+    "red":"FF0000",
+    "gold":"FFD700"
+  },
+  "objects": [
+    { 
+      "type":"line",
+      "color":"red",
+      "thickness":3,
+      "start":[320,195],
+      "end":[355,195]
+    },
+    {
+      "type":"circle",
+      "stroke_color":"gold",
+      "fill_color":"cyan",
+      "start":[60,60],
+      "radius":30
+    },
+    {
+      "type":"circle_arc",
+      "stroke_color":"FF002F",
+      "center":[300,300],
+      "start":[200,250],
+      "angle":70
+    },
+    {
+      "type":"polygon",
+      "stroke_color":"FF3333",
+      "thickness":1,
+      "points":[350,75,379,161,469,161,397,215,423,301,350,250,277,301,303,215,231,161,321,161]
+    },
+    {
+      "type":"polyline",
+      "stroke_color":"FF3333",
+      "thickness":1,
+      "points":[350,75,379,161,469,161,397,215,423,301,350,250,277,301,303,215,231,161,321,161]
+    }
+  ],
+
+  "flood_fill": [
+    { 
+      "color":"violet",
+      "start":[350,200]
+    }
+  ]
+}
