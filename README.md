@@ -7,39 +7,58 @@ Rastafarizer2D (2D Rasterizer Programming Project)
 # 1. Introduction
 A [rasterizer](https://en.wikipedia.org/wiki/Rasterisation) is a program that takes in the description of vector shapes and converts that description into a raster image, i.e. a matrix of pixels.
 
-Rastafarizer2D receives as input a scene description file coded in JSON (https://www.json.org/) and outputs an image in PPM format that contains the rasterization of all Two-Dimensional (2D) primitives described in the input 'scene.json' file.
+Rastafarizer2D receives as input a scene description file coded in JSON (https://www.json.org/) and outputs an image in PPM format that contains the rasterization of all Two-Dimensional (2D) primitives described in the input json file.
 
-# 2. Supported Primitives
+# 2. Usage
+In your terminal, run make command to compile the project and run      
+```
+./rasta your_scene.json your_image
+```
+
+# 3. Supported Primitives
 Currently the Rastafarizer2D project supports the following primitives:
 1. **Line Segment** defined by two points, a color and thickness. Implemented in Bresenham Line Generation Algorithm. 
 2. **Circles** defined by a center point and a radius. Implemented in the Midpoint Algorithm.
 3. **Polylines** defined by a set of vertex points.
 4. **Polygon** defined by a set of vertex points, stroke and fill colors and stroke thickness.
+5. **CircleArc** defined by a center point, a start point on the circle and an angle. Notice that the arc will be drawn clock-wise.
 
-# 3. Collor Filling Algorithms
+# 4. Collor Filling Algorithms
 1. **ScanLine Algorithm** To fill the color of Polygon primitives a ScanLine Algorithm is used.
 2. **Flood Fill** Flood filling is also supported. Must be provided a start point and desired Color. All Flood Fill actions must be put in the scene file, in the "flood_fill" array, after the primitive objects.
 3. **Circle Fill** To fill the color of Circle primitives a different algorithm was used, based on the Midpoint Algorithm.
 
-# 4. Anti-aliasing
-Anti-aliasing is currently not supported but will be implemented soon.
+# 5. Anti-aliasing
+Anti-aliasing is supported implemented with an unweighted sample technique.
 
+![Alt text](anti_aliasing_compare.jpg?raw=true "AntiAliasing Comparation")
 
-# 5. Scene File Manual
+# 6. Scene File Manual
 
-**Colors**  The scene file receives color in a 6-digit hexadecimal format. This guarantees support to any possible color in that format.(www.color-hex.com) is a good reference to pick. Color Pallete may be implemented soon.
+**Colors**  The scene file receives color in a 6-digit hexadecimal format. This guarantees support to any possible color in that format.(www.color-hex.com) is a good reference to pick.
+Or you can also set you own Pallete and use it's colors by name. Under the "pallete" key in may provide the colors in the format "name":"hexa_value", i.e:
 
+```json
+"pallete":{
+    "cyan":"00FFFF",
+    "royalblue":"4169E1",
+    "violet":"EE82EE",
+    "red":"FF0000"
+}
+```
 
 1. **General** 
 
 The scene file follows a JSON format using Key, Value, Arrays and Child objects.
-You must start your scene with the keys "width", "height", "background_color" and provide according value to each of them. 
+You must start your scene with the keys "width", "height", "background_color", "anti_aliasing" and provide according value to each of them. 
 
 ```json
 {
   "width": 800,
   "height": 600,
   "background_color": "000000",
+  "anti_aliasing":false,
+  "pallete":{"..."},
   "objects": [ "..." ],
   "flood_fill":["..."]
 
@@ -77,7 +96,7 @@ After that, you must start a key "objects" and place an JSON Array as it's value
     "fill_color":"010101",
     "thickness":1,
     "points":[350,75,379,161,469,161,397,215,423,301,350,250,277,301,303,215,231,161,321,161]
-},
+}
 ```
 5. **Polyline**
 ```json
@@ -86,6 +105,16 @@ After that, you must start a key "objects" and place an JSON Array as it's value
     "stroke_color":"FF3333",
     "thickness":1,
     "points":[350,75,379,161,469,161,397,215,423,301,350,250,277,301,303,215,231,161,321,161]
+}
+```
+6. **CircleArc**
+```json
+{
+    "type":"circle_arc",
+    "stroke_color":"FF002F",
+    "center":[300,300],
+    "start":[200,250],
+    "angle":70
 }
 ```
 

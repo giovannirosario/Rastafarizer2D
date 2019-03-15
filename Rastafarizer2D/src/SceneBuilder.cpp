@@ -50,11 +50,15 @@ void SceneBuilder::build_scene() {
     }
 
     if (scene_json.HasMember("background_color")) {
-        bg_color = hex_to_color(scene_json["background_color"].GetString());
+        bg_color = parse_color(scene_json["background_color"].GetString());
     }
 
     if (scene_json.HasMember("anti_aliasing")) {
         anti_aliasing = scene_json["anti_aliasing"].GetBool();
+    }
+
+    if(scene_json.HasMember("pallete")) {
+        build_pallete(scene_json);
     }
 
     if (scene_json.HasMember("objects")) {
@@ -88,6 +92,14 @@ void SceneBuilder::build_scene() {
     canvas.set_antiAliasing(anti_aliasing);
 }
 
+
+void SceneBuilder::build_pallete(const rapidjson::Document& _pt) {
+    for (auto& m : _pt["pallete"].GetObject()) {
+        pallete.insert(std::pair<std::string, std::string> (m.name.GetString(), m.value.GetString()));
+    }
+}
+
+
 void SceneBuilder::build_line(const rapidjson::Value& _pt) {
     int x1, y1;
     int x2, y2;
@@ -95,7 +107,7 @@ void SceneBuilder::build_line(const rapidjson::Value& _pt) {
     Color color;
 
     if (_pt.HasMember("color")) {
-        color = hex_to_color(_pt["color"].GetString());
+        color = parse_color(_pt["color"].GetString());
     }
 
     if (_pt.HasMember("start")) {
@@ -129,11 +141,11 @@ void SceneBuilder::build_circle(const rapidjson::Value& _pt) {
 
 
     if (_pt.HasMember("stroke_color")) {
-        stroke_color = hex_to_color(_pt["stroke_color"].GetString());
+        stroke_color = parse_color(_pt["stroke_color"].GetString());
     }
 
     if (_pt.HasMember("fill_color")) {
-        fill_color = hex_to_color(_pt["fill_color"].GetString());
+        fill_color = parse_color(_pt["fill_color"].GetString());
         fill = true;
     }
 
@@ -169,11 +181,11 @@ void SceneBuilder::build_polygon(const rapidjson::Value& _pt) {
     Object * obj;
 
     if (_pt.HasMember("stroke_color")) {
-        stroke_color = hex_to_color(_pt["stroke_color"].GetString());
+        stroke_color = parse_color(_pt["stroke_color"].GetString());
     }
 
     if (_pt.HasMember("fill_color")) {
-        fill_color = hex_to_color(_pt["fill_color"].GetString());
+        fill_color = parse_color(_pt["fill_color"].GetString());
         fill = true;
     }
 
@@ -205,7 +217,7 @@ void SceneBuilder::build_polyline(const rapidjson::Value& _pt) {
     Object * obj;
 
     if (_pt.HasMember("stroke_color")) {
-        stroke_color = hex_to_color(_pt["stroke_color"].GetString());
+        stroke_color = parse_color(_pt["stroke_color"].GetString());
     }
 
     if (_pt.HasMember("points")) {
@@ -235,7 +247,7 @@ void SceneBuilder::build_circle_arc(const rapidjson::Value& _pt) {
 
 
     if (_pt.HasMember("stroke_color")) {
-        stroke_color = hex_to_color(_pt["stroke_color"].GetString());
+        stroke_color = parse_color(_pt["stroke_color"].GetString());
     }
 
     if (_pt.HasMember("center")) {
@@ -269,9 +281,17 @@ void SceneBuilder::draw_scene() {
     }
 }
 
-Color SceneBuilder::hex_to_color(const char * hex_string) {
+Color SceneBuilder::parse_color(const char * hex_string) {
+    std::string aux = hex_string;
+
+    if (pallete.count(aux) > 0) {
+        aux = pallete.at(aux);
+    }
+
+    const char *aux_c = aux.c_str();
+
     int r, g, b;
-    sscanf(hex_string, "%02x%02x%02x", &r, &g, &b);
+    sscanf(aux_c, "%02x%02x%02x", &r, &g, &b);
     Color c = Color(r,g,b);
     return c;
 }
@@ -286,7 +306,7 @@ void SceneBuilder::flood_fill(){
     if (scene_json.HasMember("flood_fill")) {
        for (auto& obj : scene_json["flood_fill"].GetArray()) {
            if (obj.HasMember("color")) {
-                color = hex_to_color(obj["color"].GetString());
+                color = parse_color(obj["color"].GetString());
             }
 
             if (obj.HasMember("start")) {
