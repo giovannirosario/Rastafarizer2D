@@ -1,11 +1,8 @@
-#include <iostream>
-#include "Canvas.h"
-#include "Color.h"
-#include "Exporter.h"
-#include "Point2D.h"
 #include "SceneBuilder.h"
 
-int main () {
-    SceneBuilder scene_builder;
-    scene_builder.raster("scene.json", "scene");
+int main (int argc, char* argv[]) {
+    if (argc == 3) {
+        SceneBuilder scene_builder;
+        scene_builder.raster(argv[1], argv[2]);
+    }
 }
